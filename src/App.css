@@ -1,0 +1,18 @@
+@import "tailwindcss";
+body {
+  overflow: hidden;
+}
+/* Hide scrollbar on mobile for cleaner look */
+@media (max-width: 640px) {
+  .overflow-x-auto::-webkit-scrollbar {
+    display: none;
+  }
+  .overflow-x-auto {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
+}

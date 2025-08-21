@@ -1,0 +1,5 @@
+const BASE_URL_PAGINATION = "https://picsum.photos/v2/list";
+const IMAGE_COUNT = 100;
+const VIRTUAL_ITEM_COUNT = 10000;
+
+export { BASE_URL_PAGINATION, IMAGE_COUNT, VIRTUAL_ITEM_COUNT };
