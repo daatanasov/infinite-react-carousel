@@ -88,6 +88,8 @@ src/
 - **react-window** - lightweight virtualization alternative
 - **ESLint** linting & code quality
 
+---
+
 ## 🔮 Future Plans
 
 - Convert all carousels into MFE (Micro Frontend) architecture for modularity
