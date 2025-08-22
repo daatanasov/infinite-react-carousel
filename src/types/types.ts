@@ -24,7 +24,7 @@ export interface UseInfiniteScrollProps {
   scrollContainerRef: RefObject<HTMLDivElement | null>;
   hasNextPage: boolean;
   isFetchingNextPage: boolean;
-  fetchNextPage: () => Promise<any>;
+  fetchNextPage: () => Promise<unknown>;
   threshold?: number;
 }
 
@@ -52,3 +52,17 @@ export type CarouselItemProps = {
   images: Image[];
   virtualizer: { measureElement: (element: HTMLElement | null) => void };
 };
+
+export interface ImplementationApproachesProps {
+  icon: string;
+  iconBg: string;
+  iconColor: string;
+  title: string;
+  description: string;
+  features: string[];
+  isMain: boolean;
+}
+
+export interface ImplementationApproachesListProps {
+  approaches: ImplementationApproachesProps[];
+}

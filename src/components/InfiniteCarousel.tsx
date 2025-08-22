@@ -2,22 +2,23 @@ import { useVirtualizer } from "@tanstack/react-virtual";
 import { useRef } from "react";
 import useImageFetcher from "../hooks/useImageFetcher";
 import CarouselItem from "./CarouselItem";
-import { VIRTUAL_ITEM_COUNT, IMAGE_COUNT } from "../utils/const";
 import { useHorizontalScroll } from "../hooks/useHorizontalScroll";
+import { VIRTUAL_ITEM_COUNT, IMAGE_COUNT } from "../utils/const";
 
 const InfiniteCarousel = () => {
   const { images, loading, error } = useImageFetcher(IMAGE_COUNT);
-  const parentRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const virtualizer = useVirtualizer({
     count: VIRTUAL_ITEM_COUNT,
-    getScrollElement: () => parentRef.current,
+    getScrollElement: () => scrollContainerRef.current,
     estimateSize: () => 300,
     horizontal: true,
     overscan: 5,
   });
 
   const virtualItems = virtualizer.getVirtualItems();
-  useHorizontalScroll({ scrollContainerRef: parentRef });
+
+  useHorizontalScroll({ scrollContainerRef });
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64 text-gray-500">
@@ -32,10 +33,16 @@ const InfiniteCarousel = () => {
       </div>
     );
   }
+
   return (
     <div
-      ref={parentRef}
-      className="w-full h-64 md:h-96 overflow-x-auto cursor-grab active:cursor-grabbing flex relative snap-x snap-mandatory scroll-smooth">
+      ref={scrollContainerRef}
+      className="w-full h-64 md:h-96 overflow-x-auto overflow-y-hidden cursor-grab active:cursor-grabbing flex scroll-smooth"
+      style={{
+        overflow: "hidden",
+        scrollBehavior: "smooth",
+        WebkitOverflowScrolling: "touch",
+      }}>
       <div
         className="relative w-full h-full"
         style={{

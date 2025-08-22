@@ -1,6 +1,7 @@
 @import "tailwindcss";
 body {
-  overflow: hidden;
+  height: 100%;
+  overflow: auto;
 }
 /* Hide scrollbar on mobile for cleaner look */
 @media (max-width: 640px) {

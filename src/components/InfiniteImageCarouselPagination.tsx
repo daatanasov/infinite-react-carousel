@@ -9,7 +9,7 @@ import EndIndicator from "./EndIndicator";
 import { useHorizontalScroll } from "../hooks/useHorizontalScroll";
 import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
 
-export default function App() {
+export default function InfiniteImageCarouselPagination() {
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage, error } =
     useInfiniteQuery(createImagesInfiniteQueryOptions());
 
@@ -69,8 +69,7 @@ export default function App() {
         <div className="w-full max-w-7xl h-[50vh] sm:h-[60vh] lg:h-[70vh] bg-white rounded-lg sm:rounded-xl shadow-lg relative mx-auto">
           <div
             ref={scrollContainerRef}
-            className="w-full h-full overflow-x-auto overflow-y-hidden 
-                       cursor-grab active:cursor-grabbing"
+            className="w-full h-full overflow-x-auto overflow-y-hidden cursor-grab active:cursor-grabbing"
             style={{
               overflow: "hidden",
               scrollBehavior: "smooth",

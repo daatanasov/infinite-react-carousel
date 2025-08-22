@@ -8,7 +8,6 @@ export const useHorizontalScroll = ({
     (e: WheelEvent) => {
       const container = scrollContainerRef.current;
       if (!container) return;
-      if (Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
 
       e.preventDefault();
       container.scrollLeft += e.deltaY;
@@ -42,5 +41,5 @@ export const useHorizontalScroll = ({
       container.removeEventListener("touchmove", onTouchMove);
       container.removeEventListener("wheel", handleWheel);
     };
-  }, [handleWheel]);
+  }, [handleWheel, scrollContainerRef.current]);
 };

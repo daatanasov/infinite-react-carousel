@@ -1,6 +1,7 @@
 import { VariableSizeList as List } from "react-window";
 import type { ColumnType } from "../types/types";
 import { columnWidths, getItemSize } from "../utils/helpers";
+import { useEffect, useRef, useState } from "react";
 
 const Column = ({ index, style }: ColumnType) => {
   const width = columnWidths[index];
@@ -8,7 +9,7 @@ const Column = ({ index, style }: ColumnType) => {
 
   return (
     <div
-      className="flex flex-col items-center p-[8px]"
+      className="transform hover:scale-105 transition-transform duration-300 p-2"
       style={{
         ...style,
         boxSizing: "border-box",
@@ -19,12 +20,10 @@ const Column = ({ index, style }: ColumnType) => {
         }.webp`}
         decoding="async"
         alt={`Random image ${index + 1}`}
+        className="object-cover rounded-lg shadow"
         style={{
           width: "100%",
           height: height - 40,
-          objectFit: "cover",
-          borderRadius: "8px",
-          boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
         }}
         loading="lazy"
       />
@@ -35,18 +34,38 @@ const Column = ({ index, style }: ColumnType) => {
   );
 };
 
-const VirtualCarousel = () => (
-  <div className="p-[20px]">
-    <h2 className="mb-[20px]">Virtual List with react-window</h2>
-    <List
-      height={250}
-      itemCount={1000}
-      itemSize={getItemSize}
-      layout="horizontal"
-      width={800}>
-      {Column}
-    </List>
-  </div>
-);
+const VirtualCarousel = () => {
+  const [containerWidth, setContainerWidth] = useState(800);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth);
+      }
+    };
+
+    updateWidth();
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
+  }, []);
+
+  return (
+    <div
+      className="p-[20px] overflow-y-hidden overflow-x-hidden"
+      ref={containerRef}>
+      <h2 className="mb-[20px]">Virtual List with react-window</h2>
+      <List
+        height={containerWidth < 640 ? 220 : 260}
+        itemCount={1000}
+        itemSize={getItemSize}
+        className="overflow-y-hidden!"
+        layout="horizontal"
+        width={containerWidth}>
+        {Column}
+      </List>
+    </div>
+  );
+};
 
 export default VirtualCarousel;
